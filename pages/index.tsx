@@ -1,7 +1,7 @@
-import type { NextPage } from "next";
+import Link from "next/link";
 import Head from "next/head";
 import Header from "../components/Header";
-import { sanityClient} from "../sanity";
+import { sanityClient, urlFor} from "../sanity";
 import { Post } from "../typings"; 
 interface Props{
   posts:[Post]
@@ -34,10 +34,17 @@ export default function Home({posts}:Props) {
           alt=""
         />
       </div>
-
       {/* post  */}
-
-
+      <div>
+        {posts.map(post=>(
+          <Link key={post._id} href={`/post/${post.slug.current}`}>
+            <div>
+             <img src={urlFor(post.mainImage).url()!} alt="" />
+            </div>
+          </Link>
+        ))}
+      </div>
+    
     </div>
   );
 };
